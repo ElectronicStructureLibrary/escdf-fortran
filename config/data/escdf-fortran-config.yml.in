@@ -1,0 +1,55 @@
+%YAML 1.1
+---
+timestamp: "@escdff_timestamp@"
+
+target:
+    cpu: "@target_cpu@"
+    vendor: "@target_vendor@"
+    os: "@target_os@"
+
+compilers:
+    CPP: "@CPP@"
+    CPPFLAGS: "@CPPFLAGS@"
+    CC: "@CC@"
+    MPICC: "@MPICC@"
+    CFLAGS: "@CFLAGS@"
+    FC: "@FC@"
+    MPIFC: "@MPIFC@"
+    FCFLAGS: "@FCFLAGS@"
+    LDFLAGS: "@LDFLAGS@"
+    LIBS: "@LIBS@"
+
+defaults:
+    debug_enable: "@escdff_debug_enable_def@"
+    hdf5_enable: "@escdff_hdf5_enable_def@"
+    mpi_enable: "@escdff_mpi_enable_def@"
+    hdf5_ser_incs: "@escdff_hdf5_ser_incs_def@"
+    hdf5_ser_libs: "@escdff_hdf5_ser_libs_def@"
+    hdf5_mpi_incs: "@escdff_hdf5_mpi_incs_def@"
+    hdf5_mpi_libs: "@escdff_hdf5_mpi_libs_def@"
+
+options:
+    enable_debug: "@enable_debug@"
+    with_hdf5: "@with_hdf5@"
+    with_mpi: "@with_mpi@"
+
+triggers:
+    debug_enable: "@escdff_debug_enable@"
+    hdf5_enable: "@escdff_hdf5_enable@"
+    mpi_enable: "@escdff_mpi_enable@"
+
+inits:
+    debug: "@escdff_debug_type@"
+    hdf5: "@escdff_hdf5_type@"
+    mpi: "@escdff_mpi_type@"
+
+deps:
+    hdf5_incs: "@escdff_hdf5_incs@"
+    hdf5_libs: "@escdff_hdf5_libs@"
+
+mpi_internals:
+    cc_set: "@escdff_mpi_cc_set@"
+    cc_wrap: "@escdff_mpi_cc_wrap@"
+    fc_set: "@escdff_mpi_fc_set@"
+    fc_wrap: "@escdff_mpi_fc_wrap@"
+
