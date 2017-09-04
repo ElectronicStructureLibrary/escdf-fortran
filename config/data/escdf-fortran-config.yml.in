@@ -21,6 +21,7 @@ compilers:
 
 defaults:
     debug_enable: "@escdff_debug_enable_def@"
+    escdf_enable: "@escdff_escdf_enable_def@"
     hdf5_enable: "@escdff_hdf5_enable_def@"
     mpi_enable: "@escdff_mpi_enable_def@"
     hdf5_ser_incs: "@escdff_hdf5_ser_incs_def@"
@@ -30,20 +31,25 @@ defaults:
 
 options:
     enable_debug: "@enable_debug@"
+    with_escdf: "@with_escdf@"
     with_hdf5: "@with_hdf5@"
     with_mpi: "@with_mpi@"
 
 triggers:
     debug_enable: "@escdff_debug_enable@"
+    escdf_enable: "@escdff_escdf_enable@"
     hdf5_enable: "@escdff_hdf5_enable@"
     mpi_enable: "@escdff_mpi_enable@"
 
 inits:
     debug: "@escdff_debug_type@"
+    escdf: "@escdff_escdf_type@"
     hdf5: "@escdff_hdf5_type@"
     mpi: "@escdff_mpi_type@"
 
 deps:
+    escdf_incs: "@escdff_escdf_incs@"
+    escdf_libs: "@escdff_escdf_libs@"
     hdf5_incs: "@escdff_hdf5_incs@"
     hdf5_libs: "@escdff_hdf5_libs@"
 

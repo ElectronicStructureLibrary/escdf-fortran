@@ -17,7 +17,7 @@ AC_PREREQ([2.69])
 AC_INIT([ESCDF-Fortran], [0.1.0], [https://gitlab.e-cam2020.eu/esl/escdf-fortran/issues], [escdf-fortran])
 AC_CONFIG_AUX_DIR([config/gnu])
 AC_CONFIG_MACRO_DIR([config/m4])
-AC_CONFIG_SRCDIR([src/m_escdf.F90])
+AC_CONFIG_SRCDIR([src/escdff.F90])
 _AC_SRCDIRS([.])
 
 # Init Automake
@@ -41,8 +41,10 @@ AC_PROG_GREP
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_PROG_MKDIR_P
 AC_PROG_SED
+
+# Workaround for the wrong path to install-sh on Mac systems
+AX_PROG_MKDIR_P
 
 # Init variables
 escdff_core_incs=""
@@ -59,8 +61,6 @@ AC_SUBST(escdff_core_incs)
 
 # Optional features
 escdff_debug_enable_def="no"
-escdff_gcov_enable_def="no"
-escdff_memprof_enable_def="no"
 
 # MPI
 escdff_mpi_enable_def="auto"
@@ -84,7 +84,7 @@ escdff_escdf_libs_def="-lescdf"
 #
 
 # Default triggers for optional features must be yes or no, and not empty
-for escdff_cfg_default in debug gcov memprof; do
+for escdff_cfg_default in debug; do
   tmp_default=`eval echo \$\{escdff_${escdff_cfg_default}_enable_def\}`
   if test "${tmp_default}" != "no" -a \
           "${tmp_default}" != "yes"; then
@@ -119,23 +119,6 @@ AC_ARG_ENABLE([debug],
   [escdff_debug_enable="${enableval}"; escdff_debug_type="yon"],
   [escdff_debug_enable="${escdff_debug_enable_def}"; escdff_debug_type="def"])
 AC_SUBST(enable_debug)
-
-# gcov
-AC_ARG_ENABLE([gcov],
-  [AS_HELP_STRING([--enable-gcov],
-    [Enable code coverage (default: ${escdff_gcov_enable_def})])],
-  [escdff_gcov_enable="${enableval}"; escdff_gcov_type="yon"],
-  [escdff_gcov_enable="${escdff_gcov_enable_def}"; escdff_gcov_type="def"])
-AC_SUBST(enable_gcov)
-
-# memprof
-AC_ARG_ENABLE([memprof],
-  [AS_HELP_STRING([--enable-memprof],
-    [Enable memory profiling (default: ${escdff_memprof_enable_def})])],
-  [escdff_memprof_enable="${enableval}"; escdff_memprof_type="yon"],
-  [escdff_memprof_enable="${escdff_memprof_enable_def}"; escdff_memprof_type="def"])
-AC_SUBST(enable_memprof)  
-
 
                     # ------------------------------------ #
 
@@ -308,8 +291,6 @@ AC_SUBST(escdff_mpi_enable_def)
 
 # Triggers
 AC_SUBST(escdff_debug_enable)
-AC_SUBST(escdff_gcov_enable)
-AC_SUBST(escdff_memprof_enable)
 AC_SUBST(escdff_escdf_enable)
 AC_SUBST(escdff_hdf5_enable)
 AC_SUBST(escdff_mpi_enable)
@@ -348,6 +329,15 @@ ESCDFF_MPI_INIT
 #
 
 # Init C compiler and preprocessor
+if test "${CC}" != "" -a ! -x "${CC}"; then
+  escdff_cc_probe=`echo "${CC}" | sed -e 's/ .*//'`
+  if test ! -x "${escdff_cc_probe}"; then
+    AC_PATH_PROG([escdff_cc_path],[${escdff_cc_probe}])
+    if test "${escdff_cc_path}" = ""; then
+      AC_MSG_ERROR([could not run C compiler "${CC}"])
+    fi
+  fi
+fi
 AC_PROG_CC
 AC_PROG_CPP
 
@@ -358,7 +348,55 @@ AC_PROG_CPP
 #
 
 # Init Fortran compiler
+if test "${FC}" != "" -a ! -x "${FC}"; then
+  escdff_fc_probe=`echo "${FC}" | sed -e 's/ .*//'`
+  if test ! -x "${escdff_fc_probe}"; then
+    AC_PATH_PROG([escdff_fc_path], [${escdff_fc_probe}])
+    if test "${escdff_fc_path}" = ""; then
+      AC_MSG_ERROR([could not run Fortran compiler "${FC}"])
+    fi
+  fi
+fi
 AC_PROG_FC
+
+# Enforce strict file extensions
+escdff_fc_src_ok="unknown"
+AC_FC_SRCEXT([F90], [escdff_fc_src_ok="yes"], [escdff_fc_src_ok="no"])
+if test "${escdff_fc_src_ok}" != "yes"; then
+  AC_MSG_WARN([Fortran file extension could not be changed])
+  AC_MSG_WARN([Fortran tests may fail])
+fi
+
+# Look for the iso_c_binding module
+escdff_fc_iso_c_binding="unknown"
+AC_MSG_CHECKING([for the ISO_C_BINDING Fortran module])
+AC_LANG_PUSH([Fortran])
+AC_COMPILE_IFELSE(
+  [AC_LANG_PROGRAM([], [[use iso_c_binding]])],
+  [escdff_fc_iso_c_binding="yes"],
+  [escdff_fc_iso_c_binding="no"])
+AC_LANG_POP([Fortran])
+AC_MSG_RESULT([${escdff_fc_iso_c_binding}])
+if test "${escdff_fc_iso_c_binding}" != "yes"; then
+  AC_MSG_ERROR([the Fortran compiler does not provide
+                the iso_c_binding module
+                This probably happens because this compiler
+                is an antiquity
+                Please disable Fortran support or use a modern
+                Fortran compiler])
+fi
+
+# Fortran compiler peculiarities
+AX_F90_MODULE_EXTENSION
+AC_SUBST(ax_cv_f90_modext)
+AX_F90_MODULE_CASE
+
+# Language mixing
+AC_FC_WRAPPERS
+
+# Inform Automake
+AM_CONDITIONAL([F90_MOD_UPPERCASE],
+  [test "${ax_cv_f90_mod_uppercase}" = "yes"])
 
                     # ------------------------------------ #
 
@@ -504,83 +542,6 @@ fi
 
                     # ------------------------------------ #
 
-#
-# Instrumentation
-#
-
-# Memory profiling
-if test "${enable_memprof}" = "yes"; then
-  AC_CHECK_PROGS([VALGRIND], [valgrind])
-  if test "${VALGRIND}" = ""; then
-    AC_MSG_ERROR([memory profiling tool not found
-      please install valgrind first to perform memory profiling])
-  fi
-fi
-
-AM_CONDITIONAL([DO_CHECKMEM], [test "${enable_memprof}" = "yes"])
-
-# Code coverage
-AC_MSG_CHECKING([whether to enable code coverage (GCC only)])
-AC_MSG_RESULT([${enable_gcov}])
-
-CFLAGS_COVERAGE=""
-FCFLAGS_COVERAGE=""
-LDFLAGS_COVERAGE=""
-LIBS_COVERAGE=""
-
-if test "${enable_gcov}" = "yes"; then
-  if test "${ac_cv_c_compiler_gnu}" != "yes" -o \
-          "${lt_cv_prog_gnu_ld}" != "yes"; then
-    AC_MSG_ERROR([code coverage requires GNU compilers
-      please re-run configure using GCC compilers])
-  fi
-
-  AC_CHECK_PROGS([GCOV], [gcov])
-  if test "${GCOV}" = ""; then
-    AC_MSG_ERROR([gcov not found
-      please make sure that the gcov executable is in PATH])
-  fi
-
-  CFLAGS_COVERAGE="--coverage --no-inline"
-  LDFLAGS_COVERAGE="--coverage"
-  LIBS_COVERAGE="-lgcov"
-fi
-
-AM_CONDITIONAL([DO_COVERAGE], [test "${enable_gcov}" = "yes"])
-
-AC_SUBST(GCOV)
-AC_SUBST(CFLAGS_COVERAGE)
-AC_SUBST(FCFLAGS_COVERAGE)
-AC_SUBST(LDFLAGS_COVERAGE)
-AC_SUBST(LIBS_COVERAGE)
-
-
-                    # ------------------------------------ #
-
-#
-# Prepare data for the test suite
-#
-
-# Generate explicit dependencies for GCOV tests
-if test "${enable_gcov}" = "yes"; then
-  echo "# Script-generated makefile targets for GCOV tests" \
-    >src/gcov-tests-deps.mf
-  for src in ${ac_top_srcdir}/src/test_*.c; do
-    exe=`basename "${src}" | sed -e 's/\.c//'`
-    echo "" >>src/gcov-tests-deps.mf
-    echo "${exe}.log: gcov_clean.log" >>src/gcov-tests-deps.mf
-  done
-  for src in ${ac_top_srcdir}/src/test_*.in; do
-    exe=`basename "${src}" | sed -e 's/\.in//'`
-    echo "" >>src/gcov-tests-deps.mf
-    echo "${exe}.log: gcov_clean.log" >>src/gcov-tests-deps.mf
-  done
-  echo "" >>src/gcov-tests-deps.mf
-  echo "gcov_report.log: gcov_clean.log" >>src/gcov-tests-deps.mf
-fi
-
-                    # ------------------------------------ #
-
 # Write down YAML configuration
 AC_OUTPUT([config/data/escdf-fortran-config.yml])
 
@@ -595,8 +556,6 @@ AC_MSG_NOTICE([])
 AC_MSG_NOTICE([TSTAMP   = ${escdff_timestamp}])
 AC_MSG_NOTICE([])
 AC_MSG_NOTICE([DEBUG     = ${escdff_debug_enable} (init: ${escdff_debug_type})])
-AC_MSG_NOTICE([COVERAGE  = ${escdff_enable_gcov} (init: ${escdff_gcov_type})])
-AC_MSG_NOTICE([PROFILING = ${escdff_enable_memprof} (init: ${escdff_memprof_type})])
 AC_MSG_NOTICE([])
 AC_MSG_NOTICE([ESCDF    = ${escdff_escdf_enable} (init: ${escdff_escdf_type})])
 AC_MSG_NOTICE([HDF5     = ${escdff_hdf5_enable} (init: ${escdff_hdf5_type})])
@@ -614,23 +573,10 @@ AC_MSG_NOTICE([LDFLAGS  = ${LDFLAGS}])
 AC_MSG_NOTICE([LIBS     = ${LIBS}])
 AC_MSG_NOTICE([])
 
-# Output configuration
-AC_CONFIG_COMMANDS([script-perms],
-  [chmod u+x \
-    src/gcov_check_coverage \
-    src/gcov_clean \
-    src/gcov_report \
-    src/test_memory
-  ])
-
 AC_CONFIG_FILES([
   Makefile
+  config/data/escdf-fortran.pc
   doc/Makefile
-  src/Makefile
-  src/gcov_check_coverage
-  src/gcov_clean
-  src/gcov_report
-  src/test_memory
-  config/data/escdf-fortran.pc])
+  src/Makefile])
 
 AC_OUTPUT

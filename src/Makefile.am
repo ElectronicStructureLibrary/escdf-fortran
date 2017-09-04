@@ -50,10 +50,6 @@ EXTRA_DIST = $(escdff_inc_srcs)
 # Build targets
 #
 
-# Essential build parameters
-AM_CFLAGS = @CFLAGS_COVERAGE@
-AM_FCFLAGS = @FCFLAGS_COVERAGE@
-
 # Libraries
 lib_LTLIBRARIES = libescdff.la
 
