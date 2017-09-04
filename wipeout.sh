@@ -28,7 +28,7 @@
 #
 
 # Check that we are in the right directory
-if test ! -s "./configure.ac" -o ! -s "src/m_escdff.F90"; then
+if test ! -s "./configure.ac" -o ! -s "src/escdff.F90"; then
   echo "wipeout: Cowardly refusing to remove something from here!" >&2
   exit 1
 fi
