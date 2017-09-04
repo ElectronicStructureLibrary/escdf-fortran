@@ -30,9 +30,29 @@ module escdff
   private
 
   ! DO NOT EDIT THE FOLLOWING SECTION - ALL CHANGES WILL BE OVERWRITTEN!
-  ! Add new definitions into escdf.h instead
+  ! Add new definitions into escdf_common.h instead
   !%%% BEGIN ESCDF CONSTANTS
-  !    TO BE REPLACED BY IMPORTED CONSTANTS
+  integer(c_int), parameter, public :: ESCDF_STRLEN_GROUP = 256
+  integer(c_int), parameter, public :: ESCDF_SUCCESS = 0
+  integer(c_int), parameter, public :: ESCDF_ERROR = -1
+  integer(c_int), parameter, public :: ESCDF_EFILE_CORRUPT = 1
+  integer(c_int), parameter, public :: ESCDF_EFILE_FORMAT = 2
+  integer(c_int), parameter, public :: ESCDF_EIO = 3
+  integer(c_int), parameter, public :: ESCDF_ENOFILE = 4
+  integer(c_int), parameter, public :: ESCDF_ENOMEM = 5
+  integer(c_int), parameter, public :: ESCDF_ENOSUPPORT = 6
+  integer(c_int), parameter, public :: ESCDF_ETYPE = 7
+  integer(c_int), parameter, public :: ESCDF_EVALUE = 8
+  integer(c_int), parameter, public :: ESCDF_EOBJECT = 9
+  integer(c_int), parameter, public :: ESCDF_ERANGE = 10
+  integer(c_int), parameter, public :: ESCDF_ESIZE = 11
+  integer(c_int), parameter, public :: ESCDF_ESIZE_MISSING = 12
+  integer(c_int), parameter, public :: ESCDF_EUNINIT = 13
+  integer(c_int), parameter, public :: ESCDF_ESTART = 14
+  integer(c_int), parameter, public :: ESCDF_ECOUNT = 15
+  integer(c_int), parameter, public :: ESCDF_ESTRIDE = 16
+  integer(c_int), parameter, public :: ESCDF_ERROR_ARGS = -10000
+  integer(c_int), parameter, public :: ESCDF_ERROR_DIM = -1000
   !%%% END ESCDF CONSTANTS
 
 contains

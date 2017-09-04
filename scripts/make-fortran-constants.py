@@ -37,7 +37,7 @@ import re
 import sys
 
 # Check command-line arguments
-if ( (len(sys.argv) < 2) or (not os.path.exists(sys.argv[1]) ):
+if ( (len(sys.argv) < 2) or (not os.path.exists(sys.argv[1])) ):
   sys.stderr.write("Error: source ESCDF C header not found\n")
   sys.exit(1)
 
@@ -48,7 +48,7 @@ re_cst_f90 = re.compile("  !%%% BEGIN ESCDF CONSTANTS.*  !%%% END ESCDF CONSTANT
 
 # Translate C definitions into Fortran
 f90_defs = "  !%%% BEGIN ESCDF CONSTANTS\n"
-for line in file(sys.argv[1], "r").readlines():
+for line in open(sys.argv[1], "r").readlines():
   if ( re_cst_def.match(line) ):
     line = re.sub(re_c_cmts, "", line)
     line = line.split()
@@ -67,5 +67,5 @@ f90_defs += "  !%%% END ESCDF CONSTANTS"
 
 # Replace existing Fortran definitions
 f90_file = "src/escdff.F90"
-f90_src  = file(f90_file, "r").read()
-file(f90_file, "w").write(re.sub(re_cst_f90, f90_defs, f90_src))
+f90_src  = open(f90_file, "r").read()
+open(f90_file, "w").write(re.sub(re_cst_f90, f90_defs, f90_src))
