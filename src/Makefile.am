@@ -30,7 +30,9 @@
 
 # Fortran source - keep this in alphabetical order
 escdff_srcs = \
-  escdff.F90
+  escdff_common.F90 \
+  escdff_geometry.F90 \
+  escdff_handle.F90
 
 escdff_inc_srcs =
 
@@ -66,10 +68,8 @@ nodist_include_HEADERS = $(escdff_mods)
 #
 
 # Fortran
-escdff.$(LTOBJEXT): $(escdff_inc_srcs)
-
-$(escdff_mods): escdff.$(LTOBJEXT)
-	@echo "Modules already built"
+escdff_geometry.$(LTOBJEXT): escdff_common.$(LTOBJEXT) escdff_handle.$(LTOBJEXT)
+escdff_handle.$(LTOBJEXT): escdff_common.$(LTOBJEXT)
 
                     # ------------------------------------ #
 

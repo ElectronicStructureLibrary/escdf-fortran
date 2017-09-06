@@ -21,11 +21,3 @@
 #include "config.h"
 #endif
 
-module escdff
-
-  use escdff_common
-  use escdff_system
-
-  public
-
-end module escdff
