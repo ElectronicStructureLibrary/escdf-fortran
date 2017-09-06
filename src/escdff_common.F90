@@ -62,7 +62,7 @@ contains
   function f_to_c_string(f_string) result(c_string)
     character(len=*), intent(in) :: f_string
     character(kind=c_char,len=1) :: c_string(len_trim(f_string)+1)
-      
+
     integer :: i, strlen
 
     strlen = len_trim(f_string)

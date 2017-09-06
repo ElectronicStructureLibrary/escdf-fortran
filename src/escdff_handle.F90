@@ -41,7 +41,7 @@ module escdff_handle
     end type escdff_handle_t
 
     interface
-    
+
         ! Interface: handle/escdf_close
         function escdf_close(handle) &
         &           bind(c)
@@ -49,7 +49,7 @@ module escdff_handle
             integer(kind=c_int) :: escdf_close
             type(c_ptr) :: handle
         end function escdf_close
-        
+
         ! Interface: handle/escdf_create
         function escdf_create(filename, path) &
         &           bind(c)
@@ -58,7 +58,7 @@ module escdff_handle
             character(kind=c_char) :: filename(*)
             character(kind=c_char) :: path(*)
         end function escdf_create
-        
+
         ! Interface: handle/escdf_open
         function escdf_open(filename, path) &
         &           bind(c)
@@ -67,58 +67,58 @@ module escdff_handle
             character(kind=c_char) :: filename(*)
             character(kind=c_char) :: path(*)
         end function escdf_open
-        
+
     end interface
-    
+
 contains
 
     ! API: handle/escdf_close
     integer function escdff_close(handle) result(ret)
-    
+
         implicit none
-    
+
         type(escdff_handle_t), intent(inout) :: handle
-    
+
         ret = escdf_close(handle%ptr)
-    
+
     end function escdff_close
-    
+
     ! API: handle/escdf_create
     type(escdff_handle_t) function escdff_create(filename, path) result(ret)
-    
+
         use escdff_common
-    
+
         implicit none
-    
+
         character(len=*), intent(in) :: filename
         character(len=*), intent(in) :: path
-    
+
         character(kind=c_char) :: c_filename(len_trim(filename)+1)
         character(kind=c_char) :: c_path(len_trim(path)+1)
-    
+
         c_filename = f_to_c_string(trim(filename))
         c_path = f_to_c_string(trim(path))
         ret%ptr = escdf_create(c_filename, c_path)
-    
+
     end function escdff_create
-    
+
     ! API: handle/escdf_open
     type(escdff_handle_t) function escdff_open(filename, path) result(ret)
-    
+
         use escdff_common
-    
+
         implicit none
-    
+
         character(len=*), intent(in) :: filename
         character(len=*), intent(in) :: path
-    
+
         character(kind=c_char) :: c_filename(len_trim(filename)+1)
         character(kind=c_char) :: c_path(len_trim(path)+1)
-    
+
         c_filename = f_to_c_string(trim(filename))
         c_path = f_to_c_string(trim(path))
         ret%ptr = escdf_open(c_filename, c_path)
-    
+
     end function escdff_open
-    
+
 end module escdff_handle
