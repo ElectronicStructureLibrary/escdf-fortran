@@ -43,10 +43,10 @@ if ( (len(sys.argv) < 2) or (not os.path.exists(sys.argv[1])) ):
 # Init
 re_c_cmts  = re.compile("(/\*.*\*/|//.*)")
 re_cst_def = re.compile("^#define ")
-re_cst_f90 = re.compile("  !%%% BEGIN ESCDF CONSTANTS.*  !%%% END ESCDF CONSTANTS", flags=re.MULTILINE+re.DOTALL)
+re_cst_f90 = re.compile("    !%%% BEGIN ESCDF CONSTANTS.*    !%%% END ESCDF CONSTANTS", flags=re.MULTILINE+re.DOTALL)
 
 # Translate C definitions into Fortran
-f90_defs = "  !%%% BEGIN ESCDF CONSTANTS\n"
+f90_defs = "    !%%% BEGIN ESCDF CONSTANTS\n"
 for line in open(sys.argv[1], "r").readlines():
   if ( re_cst_def.match(line) ):
     line = re.sub(re_c_cmts, "", line)
@@ -56,15 +56,15 @@ for line in open(sys.argv[1], "r").readlines():
     if ( cst_value != "" ):
       try:
         cst_value = int(cst_value)
-        f90_defs += "  integer(c_int), parameter, public :: %s = %d\n" % \
+        f90_defs += "    integer(c_int), parameter, public :: %s = %d\n" % \
           (cst_name, cst_value)
       except:
         # The following should be change to use the iso_c_bindings
-        f90_defs += "  character(len=*), parameter, public :: %s = %s\n" % \
+        f90_defs += "    character(len=*), parameter, public :: %s = %s\n" % \
           (cst_name, cst_value)
-f90_defs += "  !%%% END ESCDF CONSTANTS"
+f90_defs += "    !%%% END ESCDF CONSTANTS"
 
 # Replace existing Fortran definitions
-f90_file = "src/escdff.F90"
+f90_file = "src/escdff_common.F90"
 f90_src  = open(f90_file, "r").read()
 open(f90_file, "w").write(re.sub(re_cst_f90, f90_defs, f90_src))
