@@ -23,14 +23,12 @@ module escdff_system
     public :: &
 &       escdff_system_get_number_of_species, &
 &       escdff_system_get_number_of_symmetry_operations, &
-&       escdff_system_get_spacegroup_3D_number, &
 &       escdff_system_get_symmorphic, &
 &       escdff_system_get_system_name, &
 &       escdff_system_get_time_reversal_symmetry, &
 &       escdff_system_new, &
 &       escdff_system_open, &
-&       escdff_system_open_group, &
-&       escdff_system_read_magnetic_moment_directions
+&       escdff_system_open_group
     public :: &
 &       escdff_system_read_metadata, &
 &       escdff_system_set_bulk_regions_for_semi_infinite_dimension, &
@@ -40,14 +38,19 @@ module escdff_system
 &       escdff_system_set_number_of_physical_dimensions, &
 &       escdff_system_set_number_of_sites, &
 &       escdff_system_set_number_of_species, &
-&       escdff_system_set_number_of_symmetry_operations, &
-&       escdff_system_set_spacegroup_3D_number
+&       escdff_system_set_number_of_symmetry_operations
     public :: &
 &       escdff_system_set_symmorphic, &
 &       escdff_system_set_system_name, &
-&       escdff_system_set_time_reversal_symmetry, &
-&       escdff_system_write_magnetic_moment_directions, &
-&       escdff_system_write_metadata
+&       escdff_system_set_time_reversal_symmetry
+
+! FIXME: not implemented
+!    public :: &
+!&       escdff_system_get_spacegroup_3D_number, &
+!&       escdff_system_read_magnetic_moment_directions
+!&       escdff_system_set_spacegroup_3D_number
+!&       escdff_system_write_magnetic_moment_directions, &
+!&       escdff_system_write_metadata
 
     type, public :: escdff_system_t
         private
@@ -162,13 +165,14 @@ module escdff_system
         end function escdf_system_get_number_of_symmetry_operations
 
         ! Interface: system/get_spacegroup_3D_number
-        function escdf_system_get_spacegroup_3D_number(system, spacegroup_3D_number) &
-&                   bind(c)
-            import
-            integer(kind=c_int) :: escdf_system_get_spacegroup_3D_number
-            type(c_ptr), value :: system
-            integer(kind=c_int) :: spacegroup_3D_number
-        end function escdf_system_get_spacegroup_3D_number
+! FIXME: not implemented
+!        function escdf_system_get_spacegroup_3D_number(system, spacegroup_3D_number) &
+!&                   bind(c)
+!            import
+!            integer(kind=c_int) :: escdf_system_get_spacegroup_3D_number
+!            type(c_ptr), value :: system
+!            integer(kind=c_int) :: spacegroup_3D_number
+!        end function escdf_system_get_spacegroup_3D_number
 
         ! Interface: system/get_symmorphic
         function escdf_system_get_symmorphic(system, symmorphic) &
@@ -224,16 +228,17 @@ module escdff_system
         end function escdf_system_open_group
 
         ! Interface: system/read_magnetic_moment_directions
-        function escdf_system_read_magnetic_moment_directions(system, buffer, start, count, map) &
-&                   bind(c)
-            import
-            integer(kind=c_int) :: escdf_system_read_magnetic_moment_directions
-            type(c_ptr), value :: system
-            real(kind=c_double) :: buffer
-            integer(kind=c_int), value :: start
-            integer(kind=c_int), value :: count
-            integer(kind=c_int), value :: map
-        end function escdf_system_read_magnetic_moment_directions
+! FIXME: not implemented
+!        function escdf_system_read_magnetic_moment_directions(system, buffer, start, count, map) &
+!&                   bind(c)
+!            import
+!            integer(kind=c_int) :: escdf_system_read_magnetic_moment_directions
+!            type(c_ptr), value :: system
+!            real(kind=c_double) :: buffer
+!            integer(kind=c_int), value :: start
+!            integer(kind=c_int), value :: count
+!            integer(kind=c_int), value :: map
+!        end function escdf_system_read_magnetic_moment_directions
 
         ! Interface: system/read_metadata
         function escdf_system_read_metadata(system) &
@@ -316,13 +321,14 @@ module escdff_system
         end function escdf_system_set_number_of_symmetry_operations
 
         ! Interface: system/set_spacegroup_3D_number
-        function escdf_system_set_spacegroup_3D_number(system, spacegroup_3D_number) &
-&                   bind(c)
-            import
-            integer(kind=c_int) :: escdf_system_set_spacegroup_3D_number
-            type(c_ptr) :: system
-            integer(kind=c_int) :: spacegroup_3D_number
-        end function escdf_system_set_spacegroup_3D_number
+! FIXME: not implemented
+!        function escdf_system_set_spacegroup_3D_number(system, spacegroup_3D_number) &
+!&                   bind(c)
+!            import
+!            integer(kind=c_int) :: escdf_system_set_spacegroup_3D_number
+!            type(c_ptr) :: system
+!            integer(kind=c_int) :: spacegroup_3D_number
+!        end function escdf_system_set_spacegroup_3D_number
 
         ! Interface: system/set_symmorphic
         function escdf_system_set_symmorphic(system, symmorphic) &
@@ -352,24 +358,26 @@ module escdff_system
         end function escdf_system_set_time_reversal_symmetry
 
         ! Interface: system/write_magnetic_moment_directions
-        function escdf_system_write_magnetic_moment_directions(system, buffer, start, count, map) &
-&                   bind(c)
-            import
-            integer(kind=c_int) :: escdf_system_write_magnetic_moment_directions
-            type(c_ptr), value :: system
-            real(kind=c_double), value :: buffer
-            integer(kind=c_int), value :: start
-            integer(kind=c_int), value :: count
-            integer(kind=c_int), value :: map
-        end function escdf_system_write_magnetic_moment_directions
+! FIXME: not implemented
+!        function escdf_system_write_magnetic_moment_directions(system, buffer, start, count, map) &
+!&                   bind(c)
+!            import
+!            integer(kind=c_int) :: escdf_system_write_magnetic_moment_directions
+!            type(c_ptr), value :: system
+!            real(kind=c_double), value :: buffer
+!            integer(kind=c_int), value :: start
+!            integer(kind=c_int), value :: count
+!            integer(kind=c_int), value :: map
+!        end function escdf_system_write_magnetic_moment_directions
 
         ! Interface: system/write_metadata
-        function escdf_system_write_metadata(system) &
-&                   bind(c)
-            import
-            integer(kind=c_int) :: escdf_system_write_metadata
-            type(c_ptr), value :: system
-        end function escdf_system_write_metadata
+! FIXME: not implemented
+!        function escdf_system_write_metadata(system) &
+!&                   bind(c)
+!            import
+!            integer(kind=c_int) :: escdf_system_write_metadata
+!            type(c_ptr), value :: system
+!        end function escdf_system_write_metadata
 
     end interface
 
@@ -526,16 +534,17 @@ contains
     end function escdff_system_get_number_of_symmetry_operations
 
     ! API: system/get_spacegroup_3D_number
-    integer(kind=c_int) function escdff_system_get_spacegroup_3D_number(system, spacegroup_3D_number) result(ret)
-
-        implicit none
-
-        type(escdff_system_t), intent(in) :: system
-        integer(kind=c_int), intent(inout) :: spacegroup_3D_number
-
-        ret = escdf_system_get_spacegroup_3D_number(system%ptr, spacegroup_3D_number)
-
-    end function escdff_system_get_spacegroup_3D_number
+! FIXME: not implemented
+!    integer(kind=c_int) function escdff_system_get_spacegroup_3D_number(system, spacegroup_3D_number) result(ret)
+!
+!        implicit none
+!
+!        type(escdff_system_t), intent(in) :: system
+!        integer(kind=c_int), intent(inout) :: spacegroup_3D_number
+!
+!        ret = escdf_system_get_spacegroup_3D_number(system%ptr, spacegroup_3D_number)
+!
+!    end function escdff_system_get_spacegroup_3D_number
 
     ! API: system/get_symmorphic
     integer(kind=c_int) function escdff_system_get_symmorphic(system, symmorphic) result(ret)
@@ -623,19 +632,20 @@ contains
     end function escdff_system_open_group
 
     ! API: system/read_magnetic_moment_directions
-    integer(kind=c_int) function escdff_system_read_magnetic_moment_directions(system, buffer, start, count, map) result(ret)
-
-        implicit none
-
-        type(escdff_system_t), intent(in) :: system
-        double precision, intent(inout) :: buffer
-        integer(kind=c_int), intent(in) :: start
-        integer(kind=c_int), intent(in) :: count
-        integer(kind=c_int), intent(in) :: map
-
-        ret = escdf_system_read_magnetic_moment_directions(system%ptr, buffer, start, count, map)
-
-    end function escdff_system_read_magnetic_moment_directions
+! FIXME: not implemented
+!    integer(kind=c_int) function escdff_system_read_magnetic_moment_directions(system, buffer, start, count, map) result(ret)
+!
+!        implicit none
+!
+!        type(escdff_system_t), intent(in) :: system
+!        double precision, intent(inout) :: buffer
+!        integer(kind=c_int), intent(in) :: start
+!        integer(kind=c_int), intent(in) :: count
+!        integer(kind=c_int), intent(in) :: map
+!
+!        ret = escdf_system_read_magnetic_moment_directions(system%ptr, buffer, start, count, map)
+!
+!    end function escdff_system_read_magnetic_moment_directions
 
     ! API: system/read_metadata
     integer(kind=c_int) function escdff_system_read_metadata(system) result(ret)
@@ -748,17 +758,18 @@ contains
     end function escdff_system_set_number_of_symmetry_operations
 
     ! API: system/set_spacegroup_3D_number
-    integer(kind=c_int) function escdff_system_set_spacegroup_3D_number(system, spacegroup_3D_number) result(ret)
-
-        implicit none
-
-        type(escdff_system_t), intent(inout) :: system
-        integer(kind=c_int), intent(in) :: spacegroup_3D_number
-
-        ret = escdf_system_set_spacegroup_3D_number(system%ptr, &
-&           spacegroup_3D_number)
-
-    end function escdff_system_set_spacegroup_3D_number
+! FIXME: not implemented
+!    integer(kind=c_int) function escdff_system_set_spacegroup_3D_number(system, spacegroup_3D_number) result(ret)
+!
+!        implicit none
+!
+!        type(escdff_system_t), intent(inout) :: system
+!        integer(kind=c_int), intent(in) :: spacegroup_3D_number
+!
+!        ret = escdf_system_set_spacegroup_3D_number(system%ptr, &
+!&           spacegroup_3D_number)
+!
+!    end function escdff_system_set_spacegroup_3D_number
 
     ! API: system/set_symmorphic
     integer(kind=c_int) function escdff_system_set_symmorphic(system, symmorphic) result(ret)
@@ -802,30 +813,32 @@ contains
     end function escdff_system_set_time_reversal_symmetry
 
     ! API: system/write_magnetic_moment_directions
-    integer(kind=c_int) function escdff_system_write_magnetic_moment_directions(system, buffer, start, count, map) result(ret)
-
-        implicit none
-
-        type(escdff_system_t), intent(in) :: system
-        double precision, intent(in) :: buffer
-        integer(kind=c_int), intent(in) :: start
-        integer(kind=c_int), intent(in) :: count
-        integer(kind=c_int), intent(in) :: map
-
-        ret = escdf_system_write_magnetic_moment_directions(system%ptr, &
-&           buffer, start, count, map)
-
-    end function escdff_system_write_magnetic_moment_directions
+! FIXME: not implemented
+!    integer(kind=c_int) function escdff_system_write_magnetic_moment_directions(system, buffer, start, count, map) result(ret)
+!
+!        implicit none
+!
+!        type(escdff_system_t), intent(in) :: system
+!        double precision, intent(in) :: buffer
+!        integer(kind=c_int), intent(in) :: start
+!        integer(kind=c_int), intent(in) :: count
+!        integer(kind=c_int), intent(in) :: map
+!
+!        ret = escdf_system_write_magnetic_moment_directions(system%ptr, &
+!&           buffer, start, count, map)
+!
+!    end function escdff_system_write_magnetic_moment_directions
 
     ! API: system/write_metadata
-    integer(kind=c_int) function escdff_system_write_metadata(system) result(ret)
-
-        implicit none
-
-        type(escdff_system_t), intent(in) :: system
-
-        ret = escdf_system_write_metadata(system%ptr)
-
-    end function escdff_system_write_metadata
+! FIXME: not implemented
+!    integer(kind=c_int) function escdff_system_write_metadata(system) result(ret)
+!
+!        implicit none
+!
+!        type(escdff_system_t), intent(in) :: system
+!
+!        ret = escdf_system_write_metadata(system%ptr)
+!
+!    end function escdff_system_write_metadata
 
 end module escdff_system
