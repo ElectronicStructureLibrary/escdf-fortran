@@ -596,6 +596,7 @@ AC_CONFIG_FILES([
   Makefile
   config/data/escdf-fortran.pc
   doc/Makefile
-  src/Makefile])
+  src/Makefile
+  tests/Makefile])
 
 AC_OUTPUT
