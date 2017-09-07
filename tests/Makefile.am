@@ -54,8 +54,7 @@ test_fortran_error_SOURCES = \
   test_fortran_error.F90
 test_fortran_error_LDADD = \
   libfruit.la \
-  ../src/libescdff.la \
-  @escdff_escdf_libs@
+  ../src/libescdff.la
 test_fortran_error_DEPENDENCIES = \
   ../src/libescdff.la
 
