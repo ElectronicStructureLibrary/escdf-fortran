@@ -19,6 +19,7 @@
 
 program write_system_metadata
 
+    use escdff_handle
     use escdff_system
 
     implicit none
@@ -31,21 +32,31 @@ program write_system_metadata
     double precision :: lattice_vectors(3,3)
     double precision :: reduced_coordinates(3,2)
 
-    type(escdf_handle) :: my_handle
-    type(escdff_system) :: my_sys
+    type(escdff_handle_t) :: my_handle
+    type(escdff_system_t) :: my_sys
 
     ! Define unit cell
-    lattice_vectors(:,:) = [[10.639, 0.0, 0.0], [0.0, 10.639, 0.0], [0.0, 0.0, 10.639]]
-    reduced_coordinates(:,:) = [[0.0, 0.0, 0.0], [0.5, 0.5, 0.5]]
+    lattice_vectors(:,:) = reshape([ &
+&       10.639, 0.0, 0.0, &
+&       0.0, 10.639, 0.0, &
+&       0.0, 0.0, 10.639], &
+&       shape(lattice_vectors))
+    reduced_coordinates(:,:) = reshape([&
+&       0.0, 0.0, 0.0, &
+&       0.5, 0.5, 0.5], &
+&       shape(reduced_coordinates))
     ! rprim  0.0 0.5 0.5, 0.5 0.0 0.5, 0.5 0.5 0.0
 
     ! Define atoms
     znucl(:) = [11.0, 17.0]
 
-    ! Fill-in system data structure
-    my_sys = escdff_system_new()
+    ! Create file
+    my_handle = escdff_create(filename, "/")
 
-    ! Create new ESCDF file
-    ierr =
+    ! Populate system data structure and write it down to the file
+    ierr = escdff_system_create_group(my_sys, my_handle, "systems")
+
+    ! Close the file and destroy the data structure
+    ierr = escdff_system_close(my_sys)
 
 end program write_system_metadata
