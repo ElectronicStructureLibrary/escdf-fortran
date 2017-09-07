@@ -19,7 +19,7 @@
 
 program read_system_metadata
 
-  use escdff_geometry
+  use escdff_system
 
   implicit none
 

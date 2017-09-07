@@ -19,10 +19,33 @@
 
 program write_system_metadata
 
-    use escdff_geometry
+    use escdff_system
 
     implicit none
 
     character(len=*), parameter :: filename = "example_system_nacl.escdf"
+
+    integer :: ierr
+
+    double precision :: znucl(2)
+    double precision :: lattice_vectors(3,3)
+    double precision :: reduced_coordinates(3,2)
+
+    type(escdf_handle) :: my_handle
+    type(escdff_system) :: my_sys
+
+    ! Define unit cell
+    lattice_vectors(:,:) = [[10.639, 0.0, 0.0], [0.0, 10.639, 0.0], [0.0, 0.0, 10.639]]
+    reduced_coordinates(:,:) = [[0.0, 0.0, 0.0], [0.5, 0.5, 0.5]]
+    ! rprim  0.0 0.5 0.5, 0.5 0.0 0.5, 0.5 0.5 0.0
+
+    ! Define atoms
+    znucl(:) = [11.0, 17.0]
+
+    ! Fill-in system data structure
+    my_sys = escdff_system_new()
+
+    ! Create new ESCDF file
+    ierr =
 
 end program write_system_metadata

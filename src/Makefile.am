@@ -31,8 +31,8 @@
 escdff_srcs = \
   escdff_common.F90 \
   escdff_error.F90 \
-  escdff_geometry.F90 \
-  escdff_handle.F90
+  escdff_handle.F90 \
+  escdff_system.F90
 
 escdff_inc_srcs =
 
@@ -41,14 +41,14 @@ if F90_MOD_UPPERCASE
   escdff_mods = \
     ESCDFF_COMMON.@ax_cv_f90_modext@ \
     ESCDFF_ERROR.@ax_cv_f90_modext@ \
-    ESCDFF_GEOMETRY.@ax_cv_f90_modext@ \
-    ESCDFF_HANDLE.@ax_cv_f90_modext@
+    ESCDFF_HANDLE.@ax_cv_f90_modext@ \
+    ESCDFF_SYSTEM.@ax_cv_f90_modext@
 else
   escdff_mods = \
     escdff_common.@ax_cv_f90_modext@ \
     escdff_error.@ax_cv_f90_modext@ \
-    escdff_geometry.@ax_cv_f90_modext@ \
-    escdff_handle.@ax_cv_f90_modext@
+    escdff_handle.@ax_cv_f90_modext@ \
+    escdff_system.@ax_cv_f90_modext@
 endif
 
 # Included Fortran files are not distributed by default
@@ -80,8 +80,8 @@ $(escdff_mods): libescdff.la
 
 # Fortran objects
 escdff_error.$(LTOBJEXT): escdff_common.$(LTOBJEXT)
-escdff_geometry.$(LTOBJEXT): escdff_common.$(LTOBJEXT) escdff_handle.$(LTOBJEXT)
-escdff_handle.$(LTOBJEXT): escdff_common.$(LTOBJEXT)
+escdff_handle.$(LTOBJEXT): escdff_common.$(LTOBJEXT) escdff_error.$(LTOBJEXT)
+escdff_system.$(LTOBJEXT): escdff_common.$(LTOBJEXT) escdff_handle.$(LTOBJEXT)
 
                     # ------------------------------------ #
 
