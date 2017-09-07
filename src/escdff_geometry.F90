@@ -44,12 +44,15 @@ module escdff_geometry
 &       escdff_geometry_open_group
     public :: &
 &       escdff_geometry_ptr_dimension_types, &
-&       escdff_geometry_read_magnetic_moment_directions, &
 &       escdff_geometry_read_metadata, &
 &       escdff_geometry_set_dimension_types, &
-&       escdff_geometry_set_number_of_physical_dimensions, &
-&       escdff_geometry_write_magnetic_moment_directions, &
-&       escdff_geometry_write_metadata
+&       escdff_geometry_set_number_of_physical_dimensions
+
+! FIXME: functions not yet implemented
+!    public :: &
+!&       escdff_geometry_read_magnetic_moment_directions, &
+!&       escdff_geometry_write_magnetic_moment_directions, &
+!&       escdff_geometry_write_metadata
 
     type, public :: escdff_geometry_t
         private
@@ -60,7 +63,7 @@ module escdff_geometry
 
         ! Interface: geometry/close
         function escdf_geometry_close(geometry) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_close
             type(c_ptr) :: geometry
@@ -68,7 +71,7 @@ module escdff_geometry
 
         ! Interface: geometry/close_group
         function escdf_geometry_close_group(geometry) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_close_group
             type(c_ptr) :: geometry
@@ -76,7 +79,7 @@ module escdff_geometry
 
         ! Interface: geometry/create_group
         function escdf_geometry_create_group(geometry, handle, path) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_create_group
             type(c_ptr) :: geometry
@@ -86,14 +89,14 @@ module escdff_geometry
 
         ! Interface: geometry/free
         subroutine escdf_geometry_free(geometry) &
-        &           bind(c)
+&                   bind(c)
             import
             type(c_ptr) :: geometry
         end subroutine escdf_geometry_free
 
         ! Interface: geometry/get_dimension_types
         function escdf_geometry_get_dimension_types(geometry, dimension_types, len) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_get_dimension_types
             type(c_ptr), value :: geometry
@@ -103,7 +106,7 @@ module escdff_geometry
 
         ! Interface: geometry/get_number_of_physical_dimensions
         function escdf_geometry_get_number_of_physical_dimensions(geometry) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_get_number_of_physical_dimensions
             type(c_ptr), value :: geometry
@@ -111,7 +114,7 @@ module escdff_geometry
 
         ! Interface: geometry/is_set_number_of_physical_dimensions
         function escdf_geometry_is_set_number_of_physical_dimensions(geometry) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_is_set_number_of_physical_dimensions
             type(c_ptr), value :: geometry
@@ -119,14 +122,14 @@ module escdff_geometry
 
         ! Interface: geometry/new
         function escdf_geometry_new() &
-        &           bind(c)
+&                   bind(c)
             import
             type(c_ptr) :: escdf_geometry_new
         end function escdf_geometry_new
 
         ! Interface: geometry/open
         function escdf_geometry_open(handle, name) &
-        &           bind(c)
+&                   bind(c)
             import
             type(c_ptr) :: escdf_geometry_open
             type(c_ptr), value :: handle
@@ -135,7 +138,7 @@ module escdff_geometry
 
         ! Interface: geometry/open_group
         function escdf_geometry_open_group(geometry, handle, path) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_open_group
             type(c_ptr) :: geometry
@@ -145,27 +148,28 @@ module escdff_geometry
 
         ! Interface: geometry/ptr_dimension_types
         function escdf_geometry_ptr_dimension_types(geometry) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_ptr_dimension_types
             type(c_ptr), value :: geometry
         end function escdf_geometry_ptr_dimension_types
 
+        ! FIXME: not implemented
         ! Interface: geometry/read_magnetic_moment_directions
-        function escdf_geometry_read_magnetic_moment_directions(geometry, buffer, start, count, map) &
-        &           bind(c)
-            import
-            integer(kind=c_int) :: escdf_geometry_read_magnetic_moment_directions
-            type(c_ptr), value :: geometry
-            real(kind=c_double) :: buffer
-            integer(kind=c_int), value :: start
-            integer(kind=c_int), value :: count
-            integer(kind=c_int), value :: map
-        end function escdf_geometry_read_magnetic_moment_directions
+        !function escdf_geometry_read_magnetic_moment_directions(geometry, buffer, start, count, map) &
+        !&           bind(c)
+        !    import
+        !    integer(kind=c_int) :: escdf_geometry_read_magnetic_moment_directions
+        !    type(c_ptr), value :: geometry
+        !    real(kind=c_double) :: buffer
+        !    integer(kind=c_int), value :: start
+        !    integer(kind=c_int), value :: count
+        !    integer(kind=c_int), value :: map
+        !end function escdf_geometry_read_magnetic_moment_directions
 
         ! Interface: geometry/read_metadata
         function escdf_geometry_read_metadata(geometry) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_read_metadata
             type(c_ptr) :: geometry
@@ -173,7 +177,7 @@ module escdff_geometry
 
         ! Interface: geometry/set_dimension_types
         function escdf_geometry_set_dimension_types(geometry, dimension_types, len) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_set_dimension_types
             type(c_ptr) :: geometry
@@ -183,32 +187,34 @@ module escdff_geometry
 
         ! Interface: geometry/set_number_of_physical_dimensions
         function escdf_geometry_set_number_of_physical_dimensions(geometry, number_of_physical_dimensions) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_geometry_set_number_of_physical_dimensions
             type(c_ptr) :: geometry
             integer(kind=c_int), value :: number_of_physical_dimensions
         end function escdf_geometry_set_number_of_physical_dimensions
 
+        ! FIXME: not implemented
         ! Interface: geometry/write_magnetic_moment_directions
-        function escdf_geometry_write_magnetic_moment_directions(geometry, buffer, start, count, map) &
-        &           bind(c)
-            import
-            integer(kind=c_int) :: escdf_geometry_write_magnetic_moment_directions
-            type(c_ptr), value :: geometry
-            real(kind=c_double), value :: buffer
-            integer(kind=c_int), value :: start
-            integer(kind=c_int), value :: count
-            integer(kind=c_int), value :: map
-        end function escdf_geometry_write_magnetic_moment_directions
+        !function escdf_geometry_write_magnetic_moment_directions(geometry, buffer, start, count, map) &
+        !&           bind(c)
+        !    import
+        !    integer(kind=c_int) :: escdf_geometry_write_magnetic_moment_directions
+        !    type(c_ptr), value :: geometry
+        !    real(kind=c_double), value :: buffer
+        !    integer(kind=c_int), value :: start
+        !    integer(kind=c_int), value :: count
+        !    integer(kind=c_int), value :: map
+        !end function escdf_geometry_write_magnetic_moment_directions
 
+        ! FIXME: not implemented
         ! Interface: geometry/write_metadata
-        function escdf_geometry_write_metadata(geometry) &
-        &           bind(c)
-            import
-            integer(kind=c_int) :: escdf_geometry_write_metadata
-            type(c_ptr), value :: geometry
-        end function escdf_geometry_write_metadata
+        !function escdf_geometry_write_metadata(geometry) &
+        !&           bind(c)
+        !    import
+        !    integer(kind=c_int) :: escdf_geometry_write_metadata
+        !    type(c_ptr), value :: geometry
+        !end function escdf_geometry_write_metadata
 
     end interface
 
@@ -355,20 +361,21 @@ contains
 
     end function escdff_geometry_ptr_dimension_types
 
+    ! FIXME: not implemented
     ! API: geometry/read_magnetic_moment_directions
-    integer(kind=c_int) function escdff_geometry_read_magnetic_moment_directions(geometry, buffer, start, count, map) result(ret)
+    !integer(kind=c_int) function escdff_geometry_read_magnetic_moment_directions(geometry, buffer, start, count, map) result(ret)
 
-        implicit none
+    !    implicit none
 
-        type(escdff_geometry_t), intent(in) :: geometry
-        double precision, intent(inout) :: buffer
-        integer(kind=c_int), intent(in) :: start
-        integer(kind=c_int), intent(in) :: count
-        integer(kind=c_int), intent(in) :: map
+    !    type(escdff_geometry_t), intent(in) :: geometry
+    !    double precision, intent(inout) :: buffer
+    !    integer(kind=c_int), intent(in) :: start
+    !    integer(kind=c_int), intent(in) :: count
+    !    integer(kind=c_int), intent(in) :: map
 
-        ret = escdf_geometry_read_magnetic_moment_directions(geometry%ptr, buffer, start, count, map)
+    !    ret = escdf_geometry_read_magnetic_moment_directions(geometry%ptr, buffer, start, count, map)
 
-    end function escdff_geometry_read_magnetic_moment_directions
+    !end function escdff_geometry_read_magnetic_moment_directions
 
     ! API: geometry/read_metadata
     integer(kind=c_int) function escdff_geometry_read_metadata(geometry) result(ret)
@@ -408,30 +415,32 @@ contains
 
     end function escdff_geometry_set_number_of_physical_dimensions
 
+    ! FIXME: not implemented
     ! API: geometry/write_magnetic_moment_directions
-    integer(kind=c_int) function escdff_geometry_write_magnetic_moment_directions(geometry, buffer, start, count, map) result(ret)
+    !integer(kind=c_int) function escdff_geometry_write_magnetic_moment_directions(geometry, buffer, start, count, map) result(ret)
 
-        implicit none
+    !    implicit none
 
-        type(escdff_geometry_t), intent(in) :: geometry
-        double precision, intent(in) :: buffer
-        integer(kind=c_int), intent(in) :: start
-        integer(kind=c_int), intent(in) :: count
-        integer(kind=c_int), intent(in) :: map
+    !    type(escdff_geometry_t), intent(in) :: geometry
+    !    double precision, intent(in) :: buffer
+    !    integer(kind=c_int), intent(in) :: start
+    !    integer(kind=c_int), intent(in) :: count
+    !    integer(kind=c_int), intent(in) :: map
 
-        ret = escdf_geometry_write_magnetic_moment_directions(geometry%ptr, buffer, start, count, map)
+    !    ret = escdf_geometry_write_magnetic_moment_directions(geometry%ptr, buffer, start, count, map)
 
-    end function escdff_geometry_write_magnetic_moment_directions
+    !end function escdff_geometry_write_magnetic_moment_directions
 
+    ! FIXME: not implemented
     ! API: geometry/write_metadata
-    integer(kind=c_int) function escdff_geometry_write_metadata(geometry) result(ret)
+    !integer(kind=c_int) function escdff_geometry_write_metadata(geometry) result(ret)
 
-        implicit none
+    !    implicit none
 
-        type(escdff_geometry_t), intent(in) :: geometry
+    !    type(escdff_geometry_t), intent(in) :: geometry
 
-        ret = escdf_geometry_write_metadata(geometry%ptr)
+    !    ret = escdf_geometry_write_metadata(geometry%ptr)
 
-    end function escdff_geometry_write_metadata
+    !end function escdff_geometry_write_metadata
 
 end module escdff_geometry

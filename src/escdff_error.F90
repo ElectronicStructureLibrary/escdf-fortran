@@ -1,3 +1,25 @@
+!! Copyright (C) 2017 Yann Pouillon <devops@materialsevolution.es>
+!!
+!! This file is part of ESCDF-Fortran.
+!!
+!! ESCDF-Fortran is free software: you can redistribute it and/or modify it
+!! under the terms of the GNU Lesser General Public License as published by the
+!! Free Software Foundation, version 2.1 of the License, or (at your option) any
+!! later version.
+!!
+!! ESCDF-Fortran is distributed in the hope that it will be useful, but WITHOUT
+!! ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+!! FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+!! details.
+!!
+!! You should have received a copy of the GNU Lesser General Public License
+!! along with ESCDF-Fortran.  If not, see <http://www.gnu.org/licenses/> or
+!! write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+!! Boston, MA  02110-1301  USA.
+
+#if defined HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 module escdff_error
 
@@ -26,7 +48,7 @@ module escdff_error
 
         ! Interface: error/add
         function escdf_error_add(error_id, filename, line, routine) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_error_add
             integer(kind=c_int), value :: error_id
@@ -37,22 +59,22 @@ module escdff_error
 
         ! Interface: error/fetchall
         function escdf_error_fetchall() &
-        &           bind(c)
+&                   bind(c)
             import
             type(c_ptr) :: escdf_error_fetchall
         end function escdf_error_fetchall
 
         subroutine escdff_error_flush() &
-        &           bind(c, name='escdf_error_flush')
+&                   bind(c, name='escdf_error_flush')
         end subroutine escdff_error_flush
 
         subroutine escdff_error_free() &
-        &           bind(c, name='escdf_error_free')
+&                   bind(c, name='escdf_error_free')
         end subroutine escdff_error_free
 
         ! Interface: error/get_last
         function escdf_error_get_last(routine) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_error_get_last
             character(kind=c_char) :: routine(*)
@@ -60,14 +82,14 @@ module escdff_error
 
         ! Interface: error/len
         function escdf_error_len() &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_error_len
         end function escdf_error_len
 
         ! Interface: error/string
         function escdf_error_string(error_id) &
-        &           bind(c)
+&                   bind(c)
             import
             type(c_ptr) :: escdf_error_string
             integer(kind=c_int), value :: error_id
@@ -99,12 +121,13 @@ contains
     end function escdff_error_add
 
     ! API: error/fetchall
-    character(len=ESCDF_STRLEN_ERROR) function escdff_error_fetchall() result(ret)
+    function escdff_error_fetchall() result(ret)
 
         use escdff_common
 
         implicit none
 
+        character(len=ESCDF_STRLEN_ERROR) :: ret
         type(c_ptr) :: c_ret
 
         c_ret = escdf_error_fetchall()

@@ -44,7 +44,7 @@ module escdff_handle
 
         ! Interface: handle/escdf_close
         function escdf_close(handle) &
-        &           bind(c)
+&                   bind(c)
             import
             integer(kind=c_int) :: escdf_close
             type(c_ptr) :: handle
@@ -52,7 +52,7 @@ module escdff_handle
 
         ! Interface: handle/escdf_create
         function escdf_create(filename, path) &
-        &           bind(c)
+&                   bind(c)
             import
             type(c_ptr) :: escdf_create
             character(kind=c_char) :: filename(*)
@@ -61,7 +61,7 @@ module escdff_handle
 
         ! Interface: handle/escdf_open
         function escdf_open(filename, path) &
-        &           bind(c)
+&                   bind(c)
             import
             type(c_ptr) :: escdf_open
             character(kind=c_char) :: filename(*)
