@@ -44,9 +44,9 @@ nodist_pkgconfig_DATA = config/data/escdf-fortran.pc
 
 # Some files are not removed by default and cause "make distclean" to fail
 DISTCLEANFILES = \
-  libescdff-*.tar.bz2 \
-  libescdff-*.tar.gz \
-  libescdff-*.tar.xz \
+  escdf-fortran-*.tar.bz2 \
+  escdf-fortran-*.tar.gz \
+  escdf-fortran-*.tar.xz \
   config/data/escdf-fortran.pc \
   config/data/escdf-fortran/$(PACKAGE_VERSION) \
   config/data/escdf-fortran/$(PACKAGE_VERSION).in

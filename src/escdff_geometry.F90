@@ -322,7 +322,7 @@ contains
         character(kind=c_char) :: c_name(len_trim(name)+1)
 
         c_name = f_to_c_string(trim(name))
-        ret = escdf_geometry_open(handle%ptr, c_name)
+        ret%ptr = escdf_geometry_open(handle%ptr, c_name)
 
     end function escdff_geometry_open
 
@@ -395,7 +395,9 @@ contains
     end function escdff_geometry_set_dimension_types
 
     ! API: geometry/set_number_of_physical_dimensions
-    integer(kind=c_int) function escdff_geometry_set_number_of_physical_dimensions(geometry, number_of_physical_dimensions) result(ret)
+    integer(kind=c_int) function &
+&       escdff_geometry_set_number_of_physical_dimensions(geometry, &
+&           number_of_physical_dimensions) result(ret)
 
         implicit none
 

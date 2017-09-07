@@ -35,8 +35,8 @@ module escdff_handle
 &       escdff_create, &
 &       escdff_open
 
+    ! FIXME: any way to keep the pointer private?
     type, public :: escdff_handle_t
-        private
         type(c_ptr) :: ptr = C_NULL_PTR
     end type escdff_handle_t
 

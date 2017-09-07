@@ -36,7 +36,7 @@ AC_PREREQ([2.69])
 AC_INIT([ESCDF-Fortran], [0.1.0], [https://gitlab.e-cam2020.eu/esl/escdf-fortran/issues], [escdf-fortran])
 AC_CONFIG_AUX_DIR([config/gnu])
 AC_CONFIG_MACRO_DIR([config/m4])
-AC_CONFIG_SRCDIR([src/escdff.F90])
+AC_CONFIG_SRCDIR([src/escdff_common.F90])
 _AC_SRCDIRS([.])
 
 # Init Automake

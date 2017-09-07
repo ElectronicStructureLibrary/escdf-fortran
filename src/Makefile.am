@@ -38,9 +38,15 @@ escdff_inc_srcs =
 
 # Fortran modules
 if F90_MOD_UPPERCASE
-  escdff_mods = ESCDFF.@ax_cv_f90_modext@
+  escdff_mods = \
+    ESCDFF_COMMON.@ax_cv_f90_modext@ \
+    ESCDFF_GEOMETRY.@ax_cv_f90_modext@ \
+    ESCDFF_HANDLE.@ax_cv_f90_modext@
 else
-  escdff_mods = escdff.@ax_cv_f90_modext@
+  escdff_mods = \
+    escdff_common.@ax_cv_f90_modext@ \
+    escdff_geometry.@ax_cv_f90_modext@ \
+    escdff_handle.@ax_cv_f90_modext@
 endif
 
 # Included Fortran files are not distributed by default
@@ -67,7 +73,10 @@ nodist_include_HEADERS = $(escdff_mods)
 # Explicit dependencies
 #
 
-# Fortran
+# Fortran modules
+$(escdff_mods): libescdff.la
+
+# Fortran objects
 escdff_geometry.$(LTOBJEXT): escdff_common.$(LTOBJEXT) escdff_handle.$(LTOBJEXT)
 escdff_handle.$(LTOBJEXT): escdff_common.$(LTOBJEXT)
 

@@ -43,8 +43,8 @@ AC_DEFUN([ESCDFF_ESCDF_DETECT],[
 #include <escdf.h>
       ]],
       [[
-        escdf_system_t *escdf_test;
-        escdf_test = escdf_system_new();
+        escdf_handle_t *htest;
+        htest = escdf_create("conftest.h5", "/test");
       ]])], [escdff_escdf_has_libs="yes"], [escdff_escdf_has_libs="no"])
     AC_MSG_RESULT([${escdff_escdf_has_libs}])
     AC_LANG_POP([C])
