@@ -1,0 +1,7 @@
+ESCDF-Fortran Examples
+======================
+
+This directory provides simple examples to get started with the use of the ESCDF
+libraries in Fortran codes. It is organized in sections corresponding to the HDF5
+groups defined in the ESCDF Specifications (https://escdf-specs.readthedocs.org/).
+
