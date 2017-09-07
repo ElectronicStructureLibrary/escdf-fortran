@@ -40,7 +40,7 @@ contains
     call escdff_error_free()
 
     call assert_equals(0, escdff_error_len(), "Empty error chain length")
-    call assert_equals(PSPIO_SUCCESS, escdff_error_get_last(noroutine), &
+    call assert_equals(ESCDF_SUCCESS, escdff_error_get_last(noroutine), &
 &     "Empty error chain last code")
 
   end subroutine test_error_empty
@@ -54,10 +54,10 @@ contains
     character(len=1), parameter :: ch10 = achar(10)
     character(len=*), parameter :: err_refmsg = &
 &     "libescdf: ERROR:" // ch10 // "  * in test_1_1.F90(dummy1):1234:" &
-&     // ch10 // "      value error: bad value found (PSPIO_EVALUE)" // ch10
-    integer, parameter :: err_refcode = PSPIO_EVALUE
+&     // ch10 // "      value error: bad value found (ESCDF_EVALUE)" // ch10
+    integer, parameter :: err_refcode = ESCDF_EVALUE
 
-    character(len=PSPIO_STRLEN_ERROR) :: err_msg
+    character(len=ESCDF_STRLEN_ERROR) :: err_msg
     integer :: err_code
 
     call escdff_error_free()
@@ -83,9 +83,9 @@ contains
     integer, parameter :: err_line1 = 411
     integer, parameter :: err_line2 = 422
     integer, parameter :: err_line3 = 433
-    integer, parameter :: err_refcode1 = PSPIO_EGSL
-    integer, parameter :: err_refcode2 = PSPIO_ENOFILE
-    integer, parameter :: err_refcode3 = PSPIO_ERROR
+    integer, parameter :: err_refcode1 = ESCDF_EFILE_CORRUPT
+    integer, parameter :: err_refcode2 = ESCDF_ENOFILE
+    integer, parameter :: err_refcode3 = ESCDF_ERROR
 
     integer :: err_code1, err_code2, err_code3
 
@@ -108,7 +108,7 @@ contains
 &     escdff_error_get_last(err_func2), "Last error - Function 2")
     call assert_equals(err_refcode3, &
 &     escdff_error_get_last(err_func3), "Last error - Function 3")
-    call assert_equals(PSPIO_SUCCESS, &
+    call assert_equals(ESCDF_SUCCESS, &
 &     escdff_error_get_last(err_func4), "Last error - Unknown function")
 
   end subroutine test_error_get_last
@@ -120,7 +120,7 @@ contains
     character(len=*), parameter :: err_file1 = "test_1_1.F90"
     character(len=*), parameter :: err_func1 = "dummy1"
     integer, parameter :: err_line1 = 1234
-    integer, parameter :: err_refcode1 = PSPIO_EVALUE
+    integer, parameter :: err_refcode1 = ESCDF_EVALUE
 
     integer :: err_code1
 
@@ -146,8 +146,8 @@ contains
     character(len=*), parameter :: err_func2 = "dummy22"
     integer, parameter :: err_line1 = 1234
     integer, parameter :: err_line2 = 202
-    integer, parameter :: err_refcode1 = PSPIO_EGSL
-    integer, parameter :: err_refcode2 = PSPIO_ENOSUPPORT
+    integer, parameter :: err_refcode1 = ESCDF_EFILE_CORRUPT
+    integer, parameter :: err_refcode2 = ESCDF_ENOSUPPORT
 
     integer :: err_code1, err_code2
 
@@ -181,9 +181,9 @@ contains
     integer, parameter :: err_line1 = 311
     integer, parameter :: err_line2 = 322
     integer, parameter :: err_line3 = 333
-    integer, parameter :: err_refcode1 = PSPIO_EVALUE
-    integer, parameter :: err_refcode2 = PSPIO_ENOFILE
-    integer, parameter :: err_refcode3 = PSPIO_ERROR
+    integer, parameter :: err_refcode1 = ESCDF_EVALUE
+    integer, parameter :: err_refcode2 = ESCDF_ENOFILE
+    integer, parameter :: err_refcode3 = ESCDF_ERROR
 
     integer :: err_code1, err_code2, err_code3
 

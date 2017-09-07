@@ -57,11 +57,19 @@ test_fortran_error_LDADD = \
   ../src/libescdff.la \
   @escdff_escdf_libs@
 test_fortran_error_DEPENDENCIES = \
-  ../src/libescdff.la \
-  @escdff_escdf_libs@
+  ../src/libescdff.la
 
 TESTS = \
   $(escdff_basic_tests)
+
+                    # ------------------------------------ #
+
+#
+# Explicit dependencies
+#
+
+# Fortran objects
+test_fortran_error.$(OBJEXT): fruit_error_test.$(OBJEXT)
 
                     # ------------------------------------ #
 
@@ -71,3 +79,6 @@ TESTS = \
 
 # Temporary test outputs
 MOSTLYCLEANFILES = test_*.tmp
+
+# Fortran modules
+CLEANFILES = *.@ax_cv_f90_modext@
