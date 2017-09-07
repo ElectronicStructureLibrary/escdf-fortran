@@ -25,7 +25,7 @@
 set -ev
 
 # Check that we are in the correct directory
-test -s "configure.ac" -a -s "src/escdff.F90" || exit 0
+test -s "configure.ac" -a -s "src/escdff_common.F90" || exit 0
 
 # Init build parameters
 export DBGFLAGS="-O0 -g3 -ggdb -Wall -Wextra -fbounds-check -fno-inline"
