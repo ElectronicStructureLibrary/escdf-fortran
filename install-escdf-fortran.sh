@@ -2,8 +2,8 @@
 
 # Init ESCDF params
 escdf_url="https://gitlab.e-cam2020.eu/esl"
-escdf_revno="e998cc5ef44c7993f4471ab4ce9e28ec6a4c86d1"
-escdff_revno="788fc4ca34817af64c7b40447aefbac6db227059"
+escdf_revno="5d3b2afd33171113acf3c8e4cec7e7594b5100c5"
+escdff_revno="2ccc7e274ce6a47094033b352c7bfc8aba7bf02e"
 
 # Init internal params
 my_name=`basename $0`
