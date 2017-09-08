@@ -19,7 +19,7 @@
 # write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
 # Boston, MA  02110-1301  USA.
 
-# Note: this script is temporary and will be removed upon release.
+# Note: this script is for maintainers and testers working with GCC
 
 # Stop at first error and echo commands
 set -ev

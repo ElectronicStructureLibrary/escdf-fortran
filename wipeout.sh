@@ -58,6 +58,7 @@ find . -name Makefile -exec rm {} \;
 find . -name Makefile.in -exec rm {} \;
 find . -name '*.log' -exec rm {} \;
 find . -name '*.trs' -exec rm {} \;
+rm -rf doc/developers
 rm -rf escdf-fortran-*.tar.gz
 echo "done."
 

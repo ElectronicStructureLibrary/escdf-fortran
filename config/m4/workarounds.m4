@@ -1,12 +1,12 @@
 # -*- Autoconf -*-
 #
-# M4 macros for Libpspio (imported from Abinit)
+# M4 macros for ESCDF-Fortran (imported from Abinit)
 #
-# Copyright (C) 2011 Yann Pouillon
+# Copyright (C) 2011-2017 Yann Pouillon
 #
-# This file is part of the Libpspio software package. For license information,
-# please see the COPYING file in the top-level directory of the source
-# distribution.
+# This file is part of the ESCDF-Fortran software package. For license
+# information, please see the COPYING file in the top-level directory of the
+# source distribution.
 #
 
 #

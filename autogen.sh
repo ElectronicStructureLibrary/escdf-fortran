@@ -31,14 +31,6 @@ fi
 # Create possibly missing directories
 mkdir -p config/gnu config/m4
 
-# Generate M4 macros
-#echo "Generating M4 macros..."
-#echo "done."
-
-# Generate makefiles
-#echo "Generating makefiles..."
-#echo "done."
-
 # Generate libtool scripts
 echo "Generating libtool scripts..."
 my_libtoolize="libtoolize"
